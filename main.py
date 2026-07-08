@@ -1,13 +1,11 @@
-"""
-PWHL NEXUS
-League Command Center
+from api.standings import get_standings
 
-Built with ❤️ for the Professional Women's Hockey League.
-"""
-
-print("=" * 40)
-print(" PWHL NEXUS")
-print(" League Command Center")
 print()
-print(" Cleaning the Ice...")
-print("=" * 40)
+print("PWHL NEXUS")
+print("League Command Center")
+print()
+
+standings = get_standings()
+
+for team in standings:
+    print(f"{team['team']:15} {team['points']} pts")
