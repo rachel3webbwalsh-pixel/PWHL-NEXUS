@@ -1,11 +1,14 @@
-from api.standings import get_standings
+"""
+PWHL NEXUS
+League Command Center
 
-print()
-print("PWHL NEXUS")
-print("League Command Center")
-print()
+v1.0 - Dashboard Framework
+"""
+
+from api.standings import get_standings
+from widgets.dashboard import draw_dashboard
+
 
 standings = get_standings()
 
-for team in standings:
-    print(f"{team['team']:15} {team['points']} pts")
+draw_dashboard(standings)
