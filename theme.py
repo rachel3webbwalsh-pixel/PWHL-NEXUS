@@ -7,7 +7,9 @@ Theme settings.
 
 APP_NAME = "PWHL NEXUS"
 APP_SUBTITLE = "League Command Center"
-VERSION = "v1.0 - Dashboard Framework"
+VERSION = "v1.2 - Team Hub"
+
+FAVORITE_TEAM = "Montreal"
 
 STATUS_LABEL = "● ON ICE"
 STATUS_MESSAGE = "Live API connected"
