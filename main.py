@@ -2,7 +2,7 @@
 PWHL NEXUS
 League Command Center
 
-v1.2 - Team Hub
+v1.3 - Team Identity
 """
 
 from api.standings import get_standings
