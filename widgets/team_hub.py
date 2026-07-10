@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from api.teams import TEAMS
 from theme import FAVORITE_TEAM, LINE_LENGTH
 
@@ -21,6 +23,17 @@ def draw_team_hub(standings):
     team_info = TEAMS.get(FAVORITE_TEAM, {})
     display_name = team_info.get("display_name", FAVORITE_TEAM)
     abbr = team_info.get("abbr", "")
+
+    logo_filename = team_info.get("logo")
+
+    if logo_filename:
+        logo_path = Path("assets", "logos", logo_filename)
+    else:
+        logo_path = None
+    if logo_path and logo_path.exists():
+        print("Logo Loaded Successfully.")
+    else:
+        print("Logo not found.")
 
     record = f"{favorite['wins']}-{favorite['losses']}-{favorite['otl']}"
 
