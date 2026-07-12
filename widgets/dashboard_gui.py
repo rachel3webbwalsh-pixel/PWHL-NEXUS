@@ -219,9 +219,9 @@ display_name = team_info.get("display_name", FAVORITE_TEAM)
 abbr = team_info.get("abbr", "")
 
 clock = pygame.time.Clock()
-    running = True
+running = True
 
-    while running:
+while running:
         elapsed_seconds = pygame.time.get_ticks() / 1000
         pulse = (math.sin(elapsed_seconds * 2.8) + 1) / 2
 
