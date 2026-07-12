@@ -10,6 +10,8 @@ import sys
 
 import pygame
 
+from api.teams import TEAMS.
+from theme import FAVORITE_TEAM 
 
 # Core colors
 BLACK = (0, 0, 0)
@@ -103,18 +105,13 @@ def draw_panel(
     )
 
 
-def run_dashboard() -> None:
+def run_dashboard(standings, games) -> None:
     """Launch the graphical PWHL NEXUS dashboard."""
-
-    print("Step 1")
 
     pygame.init()
 
-    print("Step 2")
-
     try:
         screen = pygame.display.set_mode((720, 1280))
-        print("Step 3")
 
     except pygame.error as error:
         pygame.quit()
@@ -143,6 +140,8 @@ def run_dashboard() -> None:
     subtitle_font = pygame.font.Font(None, scaled(36, scale))
     status_font = pygame.font.Font(None, scaled(34, scale))
     section_font = pygame.font.Font(None, scaled(34, scale))
+    body_font = pygame.font.Font(None, scaled(30, scale))
+    small_font = pygame.font.Font(None, scaled(25, scale))
     footer_font = pygame.font.Font(None, scaled(25, scale))
     exit_font = pygame.font.Font(None, scaled(34, scale))
 
@@ -205,6 +204,19 @@ def run_dashboard() -> None:
         available_width,
         scaled(330, scale),
     )
+
+favorite = next(
+    (
+        team
+        for team in standings
+        if team.get("team") == FAVORITE_TEAM
+    ),
+    None,
+)
+
+team_info = TEAMS.get(FAVORITE_TEAM, {})
+display_name = team_info.get("display_name", FAVORITE_TEAM)
+abbr = team_info.get("abbr", "")
 
     clock = pygame.time.Clock()
     running = True
@@ -302,6 +314,51 @@ def run_dashboard() -> None:
             corner_radius,
             panel_padding,
         )
+        team_text_x = team_hub_rect.left + panel_padding
+team_text_y = team_hub_rect.top + scaled(78, scale)
+
+name_surface = body_font.render(
+    f"{display_name} ({abbr})",
+    True,
+    WHITE,
+)
+screen.blit(name_surface, (team_text_x, team_text_y))
+
+if favorite:
+    record = (
+        f"{favorite.get('wins', 0)}-"
+        f"{favorite.get('losses', 0)}-"
+        f"{favorite.get('otl', 0)}"
+    )
+
+    details = [
+        "STATUS: PRESEASON",
+        f"RECORD: {record}",
+        f"POINTS: {favorite.get('points', 0)}",
+    ]
+else:
+    details = [
+        "STATUS: WAITING FOR DATA",
+        "RECORD: --",
+        "POINTS: --",
+    ]
+
+for index, line in enumerate(details):
+    line_surface = small_font.render(
+        line,
+        True,
+        MUTED_TEXT,
+    )
+
+    screen.blit(
+        line_surface,
+        (
+            team_text_x,
+            team_text_y
+            + scaled(48, scale)
+            + index * scaled(38, scale),
+        ),
+    )
 
         draw_panel(
             screen,
