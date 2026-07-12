@@ -218,7 +218,7 @@ team_info = TEAMS.get(FAVORITE_TEAM, {})
 display_name = team_info.get("display_name", FAVORITE_TEAM)
 abbr = team_info.get("abbr", "")
 
-    clock = pygame.time.Clock()
+clock = pygame.time.Clock()
     running = True
 
     while running:
