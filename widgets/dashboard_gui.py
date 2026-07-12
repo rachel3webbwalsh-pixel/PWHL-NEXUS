@@ -384,6 +384,6 @@ def run_dashboard(standings, games) -> None:
         pygame.display.flip()
         clock.tick(60)
 
-        pygame.mouse.set_visible(True)
-        pygame.quit()
-        sys.exit(0)
+    pygame.mouse.set_visible(True)
+    pygame.quit()
+    sys.exit(0)
