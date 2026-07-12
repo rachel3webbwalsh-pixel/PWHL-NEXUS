@@ -111,7 +111,7 @@ def run_dashboard(standings, games) -> None:
     pygame.init()
 
     try:
-        screen = pygame.display.set_mode((720, 1280))
+        screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
     except pygame.error as error:
         pygame.quit()
