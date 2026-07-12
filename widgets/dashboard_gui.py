@@ -2,7 +2,7 @@
 PWHL NEXUS
 League Command Center
 
-v1.4.0 - Fullscreen Graphical Framework
+v1.4.1 - Graphical Team Hub
 """
 
 import math
@@ -11,7 +11,7 @@ import sys
 import pygame
 
 from api.teams import TEAMS
-from theme import FAVORITE_TEAM 
+from theme import FAVORITE_TEAM
 
 # Core colors
 BLACK = (0, 0, 0)
@@ -34,7 +34,6 @@ def draw_glowing_dot(
     pulse: float,
 ) -> None:
     """Draw the animated purple ON ICE indicator."""
-
     glow_radius = radius * 4
     glow_surface = pygame.Surface(
         (glow_radius * 2, glow_radius * 2),
@@ -49,7 +48,6 @@ def draw_glowing_dot(
         (glow_radius, glow_radius),
         radius * 3,
     )
-
     pygame.draw.circle(
         glow_surface,
         (*NEON_PURPLE, 90),
@@ -64,7 +62,6 @@ def draw_glowing_dot(
             center[1] - glow_radius,
         ),
     )
-
     pygame.draw.circle(screen, NEON_PURPLE, center, radius)
 
 
@@ -78,14 +75,12 @@ def draw_panel(
     padding: int,
 ) -> None:
     """Draw one outlined dashboard section."""
-
     pygame.draw.rect(
         screen,
         PANEL_BLACK,
         rectangle,
         border_radius=corner_radius,
     )
-
     pygame.draw.rect(
         screen,
         SOFT_PURPLE,
@@ -95,7 +90,6 @@ def draw_panel(
     )
 
     title_surface = title_font.render(title, True, NEON_PURPLE)
-
     screen.blit(
         title_surface,
         (
@@ -107,12 +101,10 @@ def draw_panel(
 
 def run_dashboard(standings, games) -> None:
     """Launch the graphical PWHL NEXUS dashboard."""
-
     pygame.init()
 
     try:
         screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-
     except pygame.error as error:
         pygame.quit()
         raise RuntimeError(
@@ -124,7 +116,7 @@ def run_dashboard(standings, games) -> None:
 
     screen_width, screen_height = screen.get_size()
 
-    # Designed around the official 720 × 1280 portrait display.
+    # Designed around a 720 × 1280 portrait display.
     scale = min(
         screen_width / 720,
         screen_height / 1280,
@@ -145,30 +137,18 @@ def run_dashboard(standings, games) -> None:
     footer_font = pygame.font.Font(None, scaled(25, scale))
     exit_font = pygame.font.Font(None, scaled(34, scale))
 
-    title_surface = title_font.render(
-        "PWHL NEXUS",
-        True,
-        WHITE,
-    )
-
+    title_surface = title_font.render("PWHL NEXUS", True, WHITE)
     subtitle_surface = subtitle_font.render(
         "LEAGUE COMMAND CENTER",
         True,
         NEON_PURPLE,
     )
-
-    status_surface = status_font.render(
-        "ON ICE",
-        True,
-        WHITE,
-    )
-
+    status_surface = status_font.render("ON ICE", True, WHITE)
     version_surface = footer_font.render(
-        "v1.4.0 • FULLSCREEN FRAMEWORK",
+        "v1.4.1 • GRAPHICAL TEAM HUB",
         True,
         MUTED_TEXT,
     )
-
     exit_surface = exit_font.render("×", True, MUTED_TEXT)
 
     exit_rect = exit_surface.get_rect(
@@ -181,7 +161,6 @@ def run_dashboard(standings, games) -> None:
     header_top = scaled(58, scale)
     status_y = scaled(235, scale)
     divider_y = scaled(300, scale)
-
     available_width = screen_width - (outer_padding * 2)
 
     game_center_rect = pygame.Rect(
@@ -190,20 +169,18 @@ def run_dashboard(standings, games) -> None:
         available_width,
         scaled(240, scale),
     )
-
     team_hub_rect = pygame.Rect(
         outer_padding,
         game_center_rect.bottom + panel_gap,
         available_width,
         scaled(260, scale),
     )
-
     standings_rect = pygame.Rect(
-            outer_padding,
-            team_hub_rect.bottom + panel_gap,
-            available_width,
-            scaled(330, scale),
-        )
+        outer_padding,
+        team_hub_rect.bottom + panel_gap,
+        available_width,
+        scaled(330, scale),
+    )
 
     favorite = next(
         (
@@ -222,164 +199,144 @@ def run_dashboard(standings, games) -> None:
     running = True
 
     while running:
-            elapsed_seconds = pygame.time.get_ticks() / 1000
-            pulse = (math.sin(elapsed_seconds * 2.8) + 1) / 2
+        elapsed_seconds = pygame.time.get_ticks() / 1000
+        pulse = (math.sin(elapsed_seconds * 2.8) + 1) / 2
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key in (pygame.K_ESCAPE, pygame.K_q):
+                    running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if exit_rect.collidepoint(event.pos):
                     running = False
 
-                elif event.type == pygame.KEYDOWN:
-                    if event.key in (pygame.K_ESCAPE, pygame.K_q):
-                        running = False
+        screen.fill(BLACK)
 
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if exit_rect.collidepoint(event.pos):
-                        running = False
-
-            screen.fill((80, 0, 120))
-
-            # Header
-            screen.blit(
-                title_surface,
-                (
-                    outer_padding,
-                    header_top,
-                ),
-            )
-
-            screen.blit(
-                subtitle_surface,
-                (
-                    outer_padding,
-                    header_top + scaled(78, scale),
-                ),
-            )
-
-            screen.blit(exit_surface, exit_rect)
-
-            # ON ICE status
-            status_dot_center = (
-                outer_padding + scaled(11, scale),
-                status_y,
-            )
-
-            draw_glowing_dot(
-                screen,
-                status_dot_center,
-                scaled(8, scale),
-                pulse,
-            )
-
-            screen.blit(
-                status_surface,
-                (
-                    outer_padding + scaled(34, scale),
-                    status_y - (status_surface.get_height() // 2),
-                ),
-            )
-
-            # Purple divider
-            pygame.draw.line(
-                screen,
-                NEON_PURPLE,
-                (
-                    outer_padding,
-                    divider_y,
-                ),
-                (
-                    screen_width - outer_padding,
-                    divider_y,
-                ),
-                scaled(2, scale),
-            )
-
-            # Dashboard framework panels
-            draw_panel(
-                screen,
-                game_center_rect,
-                "GAME CENTER",
-                section_font,
-                border_width,
-                corner_radius,
-                panel_padding,
-            )
-
-            draw_panel(
-                screen,
-                team_hub_rect,
-                "TEAM HUB",
-                section_font,
-                border_width,
-                corner_radius,
-                panel_padding,
-            )
-            team_text_x = team_hub_rect.left + panel_padding
-    team_text_y = team_hub_rect.top + scaled(78, scale)
-
-    name_surface = body_font.render(
-        f"{display_name} ({abbr})",
-        True,
-        WHITE,
-    )
-    screen.blit(name_surface, (team_text_x, team_text_y))
-
-    if favorite:
-        record = (
-            f"{favorite.get('wins', 0)}-"
-            f"{favorite.get('losses', 0)}-"
-            f"{favorite.get('otl', 0)}"
-        )
-
-        details = [
-            "STATUS: PRESEASON",
-            f"RECORD: {record}",
-            f"POINTS: {favorite.get('points', 0)}",
-        ]
-    else:
-        details = [
-            "STATUS: WAITING FOR DATA",
-            "RECORD: --",
-            "POINTS: --",
-        ]
-
-    for index, line in enumerate(details):
-        line_surface = small_font.render(
-            line,
-            True,
-            MUTED_TEXT,
-        )
-
+        # Header
+        screen.blit(title_surface, (outer_padding, header_top))
         screen.blit(
-            line_surface,
+            subtitle_surface,
             (
-                team_text_x,
-                team_text_y
-                + scaled(48, scale)
-                + index * scaled(38, scale),
+                outer_padding,
+                header_top + scaled(78, scale),
+            ),
+        )
+        screen.blit(exit_surface, exit_rect)
+
+        # ON ICE status
+        status_dot_center = (
+            outer_padding + scaled(11, scale),
+            status_y,
+        )
+        draw_glowing_dot(
+            screen,
+            status_dot_center,
+            scaled(8, scale),
+            pulse,
+        )
+        screen.blit(
+            status_surface,
+            (
+                outer_padding + scaled(34, scale),
+                status_y - (status_surface.get_height() // 2),
             ),
         )
 
-        draw_panel(
-                screen,
-                standings_rect,
-                "STANDINGS",
-                section_font,
-                border_width,
-                corner_radius,
-                panel_padding,
-            )
+        # Purple divider
+        pygame.draw.line(
+            screen,
+            NEON_PURPLE,
+            (outer_padding, divider_y),
+            (screen_width - outer_padding, divider_y),
+            scaled(2, scale),
+        )
 
-            # Footer
-        screen.blit(
-                version_surface,
+        # Dashboard panels
+        draw_panel(
+            screen,
+            game_center_rect,
+            "GAME CENTER",
+            section_font,
+            border_width,
+            corner_radius,
+            panel_padding,
+        )
+        draw_panel(
+            screen,
+            team_hub_rect,
+            "TEAM HUB",
+            section_font,
+            border_width,
+            corner_radius,
+            panel_padding,
+        )
+        draw_panel(
+            screen,
+            standings_rect,
+            "STANDINGS",
+            section_font,
+            border_width,
+            corner_radius,
+            panel_padding,
+        )
+
+        # Team Hub content
+        team_text_x = team_hub_rect.left + panel_padding
+        team_text_y = team_hub_rect.top + scaled(78, scale)
+
+        name_surface = body_font.render(
+            f"{display_name} ({abbr})",
+            True,
+            WHITE,
+        )
+        screen.blit(name_surface, (team_text_x, team_text_y))
+
+        if favorite:
+            record = (
+                f"{favorite.get('wins', 0)}-"
+                f"{favorite.get('losses', 0)}-"
+                f"{favorite.get('otl', 0)}"
+            )
+            details = [
+                "STATUS: PRESEASON",
+                f"RECORD: {record}",
+                f"POINTS: {favorite.get('points', 0)}",
+            ]
+        else:
+            details = [
+                "STATUS: WAITING FOR DATA",
+                "RECORD: --",
+                "POINTS: --",
+            ]
+
+        for index, line in enumerate(details):
+            line_surface = small_font.render(
+                line,
+                True,
+                MUTED_TEXT,
+            )
+            screen.blit(
+                line_surface,
                 (
-                    outer_padding,
-                    screen_height
-                    - outer_padding
-                    - version_surface.get_height(),
+                    team_text_x,
+                    team_text_y
+                    + scaled(48, scale)
+                    + index * scaled(38, scale),
                 ),
             )
+
+        # Footer
+        screen.blit(
+            version_surface,
+            (
+                outer_padding,
+                screen_height
+                - outer_padding
+                - version_surface.get_height(),
+            ),
+        )
 
         pygame.display.flip()
         clock.tick(60)
