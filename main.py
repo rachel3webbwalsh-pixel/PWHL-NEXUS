@@ -2,15 +2,15 @@
 PWHL NEXUS
 League Command Center
 
-v1.3 - Team Identity
+v1.4.0 - Fullscreen Graphical Framework
 """
 
-from api.standings import get_standings
-from api.schedule import get_today_games
-from widgets.dashboard import draw_dashboard
+from widgets.dashboard_gui import run_dashboard
 
 
-standings = get_standings()
-games = get_today_games()
+def main() -> None:
+    run_dashboard()
 
-draw_dashboard(standings, games)
+
+if __name__ == "__main__":
+    main()
