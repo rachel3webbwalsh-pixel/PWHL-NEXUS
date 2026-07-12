@@ -360,7 +360,7 @@ for index, line in enumerate(details):
         ),
     )
 
-        draw_panel(
+    draw_panel(
             screen,
             standings_rect,
             "STANDINGS",
@@ -371,7 +371,7 @@ for index, line in enumerate(details):
         )
 
         # Footer
-        screen.blit(
+    screen.blit(
             version_surface,
             (
                 outer_padding,
@@ -381,8 +381,8 @@ for index, line in enumerate(details):
             ),
         )
 
-        pygame.display.flip()
-        clock.tick(60)
+    pygame.display.flip()
+    clock.tick(60)
 
     pygame.mouse.set_visible(True)
     pygame.quit()
