@@ -237,7 +237,7 @@ def run_dashboard(standings, games) -> None:
                     if exit_rect.collidepoint(event.pos):
                         running = False
 
-            screen.fill(BLACK)
+            screen.fill((80, 0, 120))
 
             # Header
             screen.blit(
