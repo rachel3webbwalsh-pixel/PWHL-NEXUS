@@ -10,7 +10,7 @@ import sys
 
 import pygame
 
-from api.teams import TEAMS.
+from api.teams import TEAMS
 from theme import FAVORITE_TEAM 
 
 # Core colors
