@@ -1,0 +1,98 @@
+[
+  {
+    "rank": 1,
+    "team": "Montréal Victoire",
+    "abbreviation": "MTL",
+    "gp": 30,
+    "rw": 16,
+    "otw": 3,
+    "otl": 2,
+    "losses": 6,
+    "points": 62,
+    "pct": 1.033
+  },
+  {
+    "rank": 2,
+    "team": "Boston Fleet",
+    "abbreviation": "BOS",
+    "gp": 30,
+    "rw": 16,
+    "otw": 2,
+    "otl": 2,
+    "losses": 5,
+    "points": 62,
+    "pct": 1.033
+  },
+  {
+    "rank": 3,
+    "team": "Minnesota Frost",
+    "abbreviation": "MIN",
+    "gp": 30,
+    "rw": 13,
+    "otw": 3,
+    "otl": 5,
+    "losses": 9,
+    "points": 50,
+    "pct": 0.833
+  },
+  {
+    "rank": 4,
+    "team": "Ottawa Charge",
+    "abbreviation": "OTT",
+    "gp": 30,
+    "rw": 9,
+    "otw": 6,
+    "otl": 0,
+    "losses": 12,
+    "points": 44,
+    "pct": 0.733
+  },
+  {
+    "rank": 5,
+    "team": "Toronto Sceptres",
+    "abbreviation": "TOR",
+    "gp": 30,
+    "rw": 10,
+    "otw": 1,
+    "otl": 3,
+    "losses": 13,
+    "points": 38,
+    "pct": 0.633
+  },
+  {
+    "rank": 6,
+    "team": "Vancouver Goldeneyes",
+    "abbreviation": "VAN",
+    "gp": 30,
+    "rw": 9,
+    "otw": 3,
+    "otl": 4,
+    "losses": 14,
+    "points": 37,
+    "pct": 0.617
+  },
+  {
+    "rank": 7,
+    "team": "New York Sirens",
+    "abbreviation": "NY",
+    "gp": 30,
+    "rw": 9,
+    "otw": 2,
+    "otl": 2,
+    "losses": 15,
+    "points": 36,
+    "pct": 0.6
+  },
+  {
+    "rank": 8,
+    "team": "Seattle Torrent",
+    "abbreviation": "SEA",
+    "gp": 30,
+    "rw": 8,
+    "otw": 0,
+    "otl": 2,
+    "losses": 16,
+    "points": 31,
+    "pct": 0.517
+  }
+]
