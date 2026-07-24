@@ -182,16 +182,18 @@ def run_dashboard(standings, games) -> None:
         scaled(330, scale),
     )
 
+    team_info = TEAMS.get(FAVORITE_TEAM, {})
+    favorite_abbr = str(team_info.get("abbr", "")).upper()
+
     favorite = next(
         (
             team
             for team in standings
-            if team.get("team") == FAVORITE_TEAM
+            if str(team.get("abbreviation", "")).upper() == favorite_abbr
         ),
         None,
     )
 
-    team_info = TEAMS.get(FAVORITE_TEAM, {})
     display_name = team_info.get("display_name", FAVORITE_TEAM)
     abbr = team_info.get("abbr", "")
 
